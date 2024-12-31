@@ -1,8 +1,13 @@
 using LearnOpenTK.Common;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 public class SceneObject
 {
+    // Not properties so we can directly access the components
+    public Vector3 Translation;
+    public Vector3 Rotation;
+
     private int _vertexArrayObject;
     private int _vertexBufferObject;
     private int _elementBufferObject;
@@ -50,6 +55,15 @@ public class SceneObject
 
     public void Draw()
     {
+        var model = Matrix4.Identity *
+            Matrix4.CreateRotationX(Rotation.X) *
+            Matrix4.CreateRotationY(Rotation.Y) *
+            Matrix4.CreateRotationZ(Rotation.Z) *
+            Matrix4.CreateTranslation(Translation);
+
+        // Each object sets its own model matrix
+        _shader.SetMatrix4("model", model);
+
         // Bind the VAO and draw the elements
         GL.BindVertexArray(_vertexArrayObject);
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);

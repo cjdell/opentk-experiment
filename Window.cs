@@ -8,17 +8,12 @@ using OpenTK.Mathematics;
 
 namespace dotnet_console_1
 {
-    public class Window : GameWindow
+    public class Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : GameWindow(gameWindowSettings, nativeWindowSettings)
     {
         private Stopwatch _timer;
         private Shader _shader;
-        private List<SceneObject> _sceneObjects = new List<SceneObject>();
+        private readonly List<SceneObject> _sceneObjects = [];
         private Camera _camera;
-
-        public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
-            : base(gameWindowSettings, nativeWindowSettings)
-        {
-        }
 
         protected override void OnLoad()
         {
@@ -44,14 +39,16 @@ namespace dotnet_console_1
             ]));
 
             _sceneObjects.Add(new SceneObject(_shader, [
-                 1.0f,  0.5f, 1.0f, // top right
-                 1.0f, -0.5f, 1.0f, // bottom right
-                 0.0f, -0.5f, 1.0f, // bottom left
-                 0.0f,  0.5f, 1.0f, // top left
+                 0.5f,  0.5f, 0.0f, // top right
+                 0.5f, -0.5f, 0.0f, // bottom right
+                -0.5f, -0.5f, 0.0f, // bottom left
+                -0.5f,  0.5f, 0.0f, // top left
             ], [
                 0, 1, 3, // First triangle
                 1, 2, 3  // Second triangle
             ]));
+
+            _sceneObjects[1].Translation.Z = 1.0f;
 
             _camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
@@ -72,9 +69,9 @@ namespace dotnet_console_1
             int vertexColorLocation = GL.GetUniformLocation(_shader.Handle, "ourColor");
             GL.Uniform4(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
-            var model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(timeValue * 90.0f));
+            _sceneObjects[0].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
+            _sceneObjects[1].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
 
-            _shader.SetMatrix4("model", model);
             _shader.SetMatrix4("view", _camera.GetViewMatrix());
             _shader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
