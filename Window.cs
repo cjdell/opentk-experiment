@@ -11,7 +11,7 @@ namespace dotnet_console_1
     {
         private Stopwatch _timer;
         private Shader _shader;
-        private SceneObject _sceneObject;
+        private List<SceneObject> _sceneObjects = new List<SceneObject>();
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
@@ -28,23 +28,26 @@ namespace dotnet_console_1
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
 
-            // Define vertices and indices for the object
-            var vertices = new float[]
-            {
+            // Create a SceneObject with the vertices and indices
+            _sceneObjects.Add(new SceneObject(_shader, [
                  0.5f,  0.5f, 0.0f, // top right
                  0.5f, -0.5f, 0.0f, // bottom right
                 -0.5f, -0.5f, 0.0f, // bottom left
                 -0.5f,  0.5f, 0.0f, // top left
-            };
-
-            var indices = new uint[]
-            {
+            ], [
                 0, 1, 3, // First triangle
                 1, 2, 3  // Second triangle
-            };
+            ]));
 
-            // Create a SceneObject with the vertices and indices
-            _sceneObject = new SceneObject(_shader, vertices, indices);
+            _sceneObjects.Add(new SceneObject(_shader, [
+                 1.0f,  0.5f, 1.0f, // top right
+                 1.0f, -0.5f, 1.0f, // bottom right
+                 0.0f, -0.5f, 1.0f, // bottom left
+                 0.0f,  0.5f, 1.0f, // top left
+            ], [
+                0, 1, 3, // First triangle
+                1, 2, 3  // Second triangle
+            ]));
 
             // Start the timer
             _timer = new Stopwatch();
@@ -64,7 +67,7 @@ namespace dotnet_console_1
             GL.Uniform4(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
             // Draw the scene object
-            _sceneObject.Draw();
+            _sceneObjects.ForEach(o => o.Draw());
 
             SwapBuffers();
         }

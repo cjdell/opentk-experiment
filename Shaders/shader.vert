@@ -42,6 +42,6 @@ void main(void)
 {
     gl_Position = vec4(aPosition, 1.0);
 
-    // Here we assign the variable a dark red color to the out variable
-	vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
+    float depth = aPosition.z / 2.0f;
+    vertexColor = vec4(depth, depth, depth, 1.0);
 }
