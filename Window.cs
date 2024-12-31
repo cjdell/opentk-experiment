@@ -4,6 +4,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Desktop;
 using System.Diagnostics;
+using OpenTK.Mathematics;
 
 namespace dotnet_console_1
 {
@@ -12,6 +13,7 @@ namespace dotnet_console_1
         private Stopwatch _timer;
         private Shader _shader;
         private List<SceneObject> _sceneObjects = new List<SceneObject>();
+        private Camera _camera;
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
@@ -23,6 +25,8 @@ namespace dotnet_console_1
             base.OnLoad();
 
             GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+            GL.Enable(EnableCap.DepthTest);
 
             // Initialize the shader
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
@@ -49,6 +53,8 @@ namespace dotnet_console_1
                 1, 2, 3  // Second triangle
             ]));
 
+            _camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
+
             // Start the timer
             _timer = new Stopwatch();
             _timer.Start();
@@ -58,13 +64,19 @@ namespace dotnet_console_1
         {
             base.OnRenderFrame(e);
 
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             double timeValue = _timer.Elapsed.TotalSeconds;
             float greenValue = (float)Math.Sin(timeValue) / 2.0f + 0.5f;
 
             int vertexColorLocation = GL.GetUniformLocation(_shader.Handle, "ourColor");
             GL.Uniform4(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+            var model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(timeValue * 90.0f));
+
+            _shader.SetMatrix4("model", model);
+            _shader.SetMatrix4("view", _camera.GetViewMatrix());
+            _shader.SetMatrix4("projection", _camera.GetProjectionMatrix());
 
             // Draw the scene object
             _sceneObjects.ForEach(o => o.Draw());

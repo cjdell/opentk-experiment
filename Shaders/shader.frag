@@ -1,14 +1,10 @@
 #version 330
 
-uniform vec4 ourColor; 
-
-out vec4 outputColor;
-
-// This is where the color variable we declared and assigned in vertex shader 
-// Gets pass to, this is enabled by using the in keyword 
-// Keep in mind the vec type must match in order for this to work
+uniform vec4 ourColor;
 
 in vec4 vertexColor;
+
+out vec4 outputColor;
 
 void main()
 {
