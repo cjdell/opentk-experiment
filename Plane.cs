@@ -1,6 +1,6 @@
 using LearnOpenTK.Common;
 
-namespace dotnet_console_1
+namespace opentk_experiment
 {
     public class Plane(Shader shader, float width, float height) : SceneObject(shader)
     {

@@ -1,6 +1,6 @@
 using LearnOpenTK.Common;
 
-namespace dotnet_console_1
+namespace opentk_experiment
 {
     public class Sphere(Shader shader, float radius, int latitudeSegments, int longitudeSegments) : SceneObject(shader)
     {

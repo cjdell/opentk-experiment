@@ -2,7 +2,7 @@
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace dotnet_console_1
+namespace opentk_experiment
 {
     public static class Program
     {
@@ -11,7 +11,7 @@ namespace dotnet_console_1
             var nativeWindowSettings = new NativeWindowSettings()
             {
                 ClientSize = new Vector2i(800, 600),
-                Title = "LearnOpenTK - Creating a Window",
+                Title = "OpenTK Experiment",
                 // This is needed to run on macos
                 Flags = ContextFlags.ForwardCompatible,
             };

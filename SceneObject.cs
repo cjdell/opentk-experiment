@@ -2,7 +2,7 @@ using LearnOpenTK.Common;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace dotnet_console_1
+namespace opentk_experiment
 {
     public abstract class SceneObject
     {

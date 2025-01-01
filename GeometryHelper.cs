@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
-namespace dotnet_console_1
+namespace opentk_experiment
 {
     public static class GeometryHelper
     {

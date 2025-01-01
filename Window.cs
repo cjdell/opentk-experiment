@@ -6,7 +6,7 @@ using OpenTK.Windowing.Desktop;
 using System.Diagnostics;
 using OpenTK.Mathematics;
 
-namespace dotnet_console_1
+namespace opentk_experiment
 {
     public class Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : GameWindow(gameWindowSettings, nativeWindowSettings)
     {
