@@ -73,6 +73,15 @@ namespace opentk_experiment
             {
                 Close();
             }
+
+            if (input.IsKeyPressed(Keys.O))
+            {
+                _camera.Orthographic = true;
+            }
+            if (input.IsKeyPressed(Keys.P))
+            {
+                _camera.Orthographic = false;
+            }
         }
 
         protected override void OnResize(ResizeEventArgs e)

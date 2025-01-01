@@ -38,7 +38,9 @@ namespace LearnOpenTK.Common
         public Vector3 Position { get; set; }
 
         // This is simply the aspect ratio of the viewport, used for the projection matrix.
-        public float AspectRatio { private get; set; }
+        public float AspectRatio { get; set; }
+
+        public bool Orthographic { get; set; }
 
         public Vector3 Front => _front;
 
@@ -95,7 +97,14 @@ namespace LearnOpenTK.Common
         // Get the projection matrix using the same method we have used up until this point
         public Matrix4 GetProjectionMatrix()
         {
-            return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 100f);
+            if (Orthographic)
+            {
+                return Matrix4.CreateOrthographic(AspectRatio * Position.Z, Position.Z, 0.01f, 100f);
+            }
+            else
+            {
+                return Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 100f);
+            }
         }
 
         // This function is going to update the direction vertices using some of the math learned in the web tutorials.
