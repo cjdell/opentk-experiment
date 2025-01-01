@@ -27,14 +27,9 @@ namespace dotnet_console_1
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
 
-            var planeData = GeometryHelper.CreatePlane(1.0f, 1.0f, 2);
-
-            _sceneObjects.Add(new SceneObject(_shader, planeData.Attributes, planeData.Indices));
-            _sceneObjects.Add(new SceneObject(_shader, planeData.Attributes, planeData.Indices));
-
-            var sphereData = GeometryHelper.CreateSphere(0.5f, 24, 24);
-
-            _sceneObjects.Add(new SceneObject(_shader, sphereData.Attributes, sphereData.Indices));
+            _sceneObjects.Add(new Plane(_shader, 1.0f, 1.0f));
+            _sceneObjects.Add(new Plane(_shader, 1.0f, 1.0f));
+            _sceneObjects.Add(new Sphere(_shader, 0.5f, 24, 24));
 
             _camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
