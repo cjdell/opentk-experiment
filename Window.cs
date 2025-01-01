@@ -27,28 +27,14 @@ namespace dotnet_console_1
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
             _shader.Use();
 
-            // Create a SceneObject with the vertices and indices
-            _sceneObjects.Add(new SceneObject(_shader, [
-                 0.5f,  0.5f, 0.0f, // top right
-                 0.5f, -0.5f, 0.0f, // bottom right
-                -0.5f, -0.5f, 0.0f, // bottom left
-                -0.5f,  0.5f, 0.0f, // top left
-            ], [
-                0, 1, 3, // First triangle
-                1, 2, 3  // Second triangle
-            ]));
+            var planeData = GeometryHelper.CreatePlane(1.0f, 1.0f, 2);
 
-            _sceneObjects.Add(new SceneObject(_shader, [
-                 0.5f,  0.5f, 0.0f, // top right
-                 0.5f, -0.5f, 0.0f, // bottom right
-                -0.5f, -0.5f, 0.0f, // bottom left
-                -0.5f,  0.5f, 0.0f, // top left
-            ], [
-                0, 1, 3, // First triangle
-                1, 2, 3  // Second triangle
-            ]));
+            _sceneObjects.Add(new SceneObject(_shader, planeData.Attributes, planeData.Indices));
+            _sceneObjects.Add(new SceneObject(_shader, planeData.Attributes, planeData.Indices));
 
-            _sceneObjects[1].Translation.Z = 1.0f;
+            var sphereData = GeometryHelper.CreateSphere(0.5f, 24, 24);
+
+            _sceneObjects.Add(new SceneObject(_shader, sphereData.Attributes, sphereData.Indices));
 
             _camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
@@ -71,6 +57,7 @@ namespace dotnet_console_1
 
             _sceneObjects[0].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[1].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
+            _sceneObjects[2].Translation.Y = (float)Math.Sin(timeValue);
 
             _shader.SetMatrix4("view", _camera.GetViewMatrix());
             _shader.SetMatrix4("projection", _camera.GetProjectionMatrix());

@@ -42,12 +42,13 @@ public class SceneObject
         GL.BufferData(BufferTarget.ElementArrayBuffer, _indices.Length * sizeof(uint), _indices, BufferUsageHint.StaticDraw);
 
         // Set up vertex attribute pointers (position data)
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-        GL.EnableVertexAttribArray(0);
-
         var vertexLocation = _shader.GetAttribLocation("aPosition");
+        GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
         GL.EnableVertexAttribArray(vertexLocation);
-        GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+
+        var normalLocation = _shader.GetAttribLocation("aNormal");
+        GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+        GL.EnableVertexAttribArray(normalLocation);
 
         // Unbind the VAO to prevent accidental modifications
         GL.BindVertexArray(0);
@@ -67,6 +68,7 @@ public class SceneObject
         // Bind the VAO and draw the elements
         GL.BindVertexArray(_vertexArrayObject);
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+        // GL.DrawElements(PrimitiveType.LineLoop, _indices.Length, DrawElementsType.UnsignedInt, 0);
     }
 
     public void Dispose()
