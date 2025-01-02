@@ -2,7 +2,7 @@ using LearnOpenTK.Common;
 
 namespace opentk_experiment
 {
-    public class Sphere(Shader shader, float radius, int latitudeSegments, int longitudeSegments) : SceneObject(shader)
+    public class Sphere(Shader shader, float radius, int latitudeSegments, int longitudeSegments) : Mesh(shader)
     {
         public float Radius => radius;
         public int LatitudeSegments => latitudeSegments;

@@ -31,6 +31,19 @@ namespace opentk_experiment
             _sceneObjects.Add(new Plane(_shader, 1.0f, 1.0f));
             _sceneObjects.Add(new Sphere(_shader, 0.5f, 24, 24));
 
+            var group = new SceneGroup(_shader);
+
+            var sphere1 = new Sphere(_shader, 0.5f, 24, 24);
+            sphere1.Translation.X = -2.0f;
+
+            var sphere2 = new Sphere(_shader, 0.5f, 24, 24);
+            sphere2.Translation.X = 2.0f;
+
+            group.Children.Add(sphere1);
+            group.Children.Add(sphere2);
+
+            _sceneObjects.Add(group);
+
             _camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
 
             // Start the timer
@@ -54,11 +67,14 @@ namespace opentk_experiment
             _sceneObjects[1].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[2].Translation.Y = (float)Math.Sin(timeValue);
 
-            _shader.SetMatrix4("view", _camera.GetViewMatrix());
-            _shader.SetMatrix4("projection", _camera.GetProjectionMatrix());
+            _sceneObjects[3].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
+            _sceneObjects[3].Translation.Y = (float)Math.Sin(timeValue / 4.0f);
+
+            _shader.SetMatrix4("uView", _camera.GetViewMatrix());
+            _shader.SetMatrix4("uProjection", _camera.GetProjectionMatrix());
 
             // Draw the scene object
-            _sceneObjects.ForEach(o => o.Draw());
+            _sceneObjects.ForEach(o => o.Draw(Matrix4.Identity));
 
             SwapBuffers();
         }

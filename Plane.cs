@@ -2,7 +2,7 @@ using LearnOpenTK.Common;
 
 namespace opentk_experiment
 {
-    public class Plane(Shader shader, float width, float height) : SceneObject(shader)
+    public class Plane(Shader shader, float width, float height) : Mesh(shader)
     {
         public float Width => width;
         public float Height => height;
