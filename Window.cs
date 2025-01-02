@@ -28,7 +28,7 @@ namespace opentk_experiment
             _shader.Use();
 
             _sceneObjects.Add(new Plane(_shader, 1.0f, 1.0f));
-            _sceneObjects.Add(new Plane(_shader, 1.0f, 1.0f));
+            _sceneObjects.Add(new Cube(_shader, 0.5f));
             _sceneObjects.Add(new Sphere(_shader, 0.5f, 24, 24));
 
             var group = new SceneGroup(_shader);

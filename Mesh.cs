@@ -33,14 +33,24 @@ namespace opentk_experiment
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, meshData.Indices.Length * sizeof(uint), meshData.Indices, BufferUsageHint.StaticDraw);
 
+            var stride = 9 * sizeof(float);
+
             // Set up vertex attribute pointers (position data)
             var vertexLocation = _shader.GetAttribLocation("aPosition");
-            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, stride, 0);
             GL.EnableVertexAttribArray(vertexLocation);
 
             var normalLocation = _shader.GetAttribLocation("aNormal");
-            GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+            GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
             GL.EnableVertexAttribArray(normalLocation);
+
+            var textureLocation = _shader.GetAttribLocation("aUv");
+            GL.VertexAttribPointer(textureLocation, 2, VertexAttribPointerType.Float, false, stride, 6 * sizeof(float));
+            GL.EnableVertexAttribArray(textureLocation);
+
+            var faceLocation = _shader.GetAttribLocation("aFace");
+            GL.VertexAttribPointer(faceLocation, 1, VertexAttribPointerType.Float, false, stride, 8 * sizeof(float));
+            GL.EnableVertexAttribArray(faceLocation);
 
             // Unbind the VAO to prevent accidental modifications
             GL.BindVertexArray(0);

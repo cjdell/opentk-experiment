@@ -8,5 +8,5 @@ out vec4 outputColor;
 
 void main()
 {
-    outputColor = ourColor + vertexColor;
+    outputColor = vertexColor;
 }
