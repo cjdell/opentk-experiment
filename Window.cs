@@ -74,6 +74,23 @@ namespace opentk_experiment
                 Close();
             }
 
+            if (input.IsKeyDown(Keys.W))
+            {
+                _camera.Position -= Vector3.UnitZ * (float)e.Time;
+            }
+            if (input.IsKeyDown(Keys.S))
+            {
+                _camera.Position += Vector3.UnitZ * (float)e.Time;
+            }
+            if (input.IsKeyDown(Keys.A))
+            {
+                _camera.Position -= Vector3.UnitX * (float)e.Time;
+            }
+            if (input.IsKeyDown(Keys.D))
+            {
+                _camera.Position += Vector3.UnitX * (float)e.Time;
+            }
+
             if (input.IsKeyPressed(Keys.O))
             {
                 _camera.Orthographic = true;
