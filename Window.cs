@@ -14,6 +14,7 @@ namespace opentk_experiment
         private Shader _shader;
         private readonly List<SceneObject> _sceneObjects = [];
         private Camera _camera;
+        private Texture _texture;
 
         protected override void OnLoad()
         {
@@ -49,6 +50,10 @@ namespace opentk_experiment
             // Start the timer
             _timer = new Stopwatch();
             _timer.Start();
+
+            _texture = Texture.LoadFromFile("Resources/texture.png");
+            _texture.Use(TextureUnit.Texture0);
+            _shader.SetInt("texture0", 0);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

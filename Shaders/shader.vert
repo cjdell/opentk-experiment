@@ -10,6 +10,7 @@ in vec2 aUv;
 in uint aFace;
 
 out vec4 vertexColor;
+out vec2 texCoord;
 
 void main(void)
 {
@@ -19,4 +20,6 @@ void main(void)
     // vertexColor = vec4(aNormal, 1.0);
     vertexColor = vec4(aUv, 0.0, 1.0);
     // vertexColor = vec4(aFace / 5.0, 0.0, 0.0, 1.0);
+
+    texCoord = aUv;
 }

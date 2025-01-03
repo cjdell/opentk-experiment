@@ -91,7 +91,7 @@ namespace opentk_experiment
 
                     vertices.Add(position);
                     normals.Add(normal);
-                    texCoords.Add(new Vector2(lon / (float)longitudeSegments, lat / (float)latitudeSegments));
+                    texCoords.Add(new Vector2(lon / (float)longitudeSegments, 1.0f - lat / (float)latitudeSegments));
                     faces.Add(0);
                 }
             }
