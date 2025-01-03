@@ -51,7 +51,7 @@ namespace opentk_experiment
             _timer = new Stopwatch();
             _timer.Start();
 
-            _texture = Texture.LoadFromFile("Resources/texture.png");
+            _texture = Texture.LoadFromFile("Resources/cube.png");
             _texture.Use(TextureUnit.Texture0);
             _shader.SetInt("texture0", 0);
         }
@@ -67,6 +67,7 @@ namespace opentk_experiment
 
             _sceneObjects[0].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[1].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
+            _sceneObjects[1].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 30.0f);
             _sceneObjects[2].Translation.Y = (float)Math.Sin(timeValue);
 
             _sceneObjects[3].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);

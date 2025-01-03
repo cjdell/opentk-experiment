@@ -172,7 +172,7 @@ namespace opentk_experiment
                     var vertex = positions[faceIndices[i][j]];
                     vertices.Add(vertex);
                     normals.Add(normal);
-                    faces.Add(i);
+                    faces.Add(10 + i);
                     texCoords.Add(new Vector2(j == 1 || j == 2 ? 1 : 0, j >= 2 ? 1 : 0));
                 }
 

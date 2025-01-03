@@ -13,9 +13,32 @@ in float face;
 
 out vec4 outputColor;
 
+vec2 mapCubeFaceTexCoords(vec2 texCoords, int faceIndex) {
+    if (faceIndex < 10) {
+        return texCoords;
+    }
+
+    faceIndex -= 10;
+
+    // Determine the face's row (0 for top row, 1 for bottom row)
+    int row = 2 - faceIndex / 3;
+    // Determine the face's column (0, 1, or 2 within its row)
+    int col = faceIndex % 3;
+
+    // Calculate the offset for the face in the texture atlas
+    vec2 offset = vec2(col / 3.0, row / 3.0);
+
+    // Scale the input texture coordinates to the size of one face
+    vec2 scaledCoords = texCoords / 3.0;
+
+    // Add the offset to position the texture coordinates within the appropriate face
+    return offset + scaledCoords;
+}
+
 void main()
 {
-    vec3 objectColor = texture(texture0, texCoord).rgb;
+    // vec3 objectColor = vec3(1.0, 1.0, 1.0); 
+    vec3 objectColor = texture(texture0, mapCubeFaceTexCoords(texCoord, int(face))).rgb;
 
     //The ambient color is the color where the light does not directly hit the object.
     //You can think of it as an underlying tone throughout the object. Or the light coming from the scene/the sky (not the sun).
