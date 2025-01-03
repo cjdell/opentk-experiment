@@ -3,8 +3,9 @@
 uniform vec4 ourColor;
 uniform sampler2D texture0;
 
-in vec4 vertexColor;
+in vec3 normal;
 in vec2 texCoord;
+in float face;
 
 out vec4 outputColor;
 

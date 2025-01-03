@@ -44,7 +44,7 @@ namespace opentk_experiment
             GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
             GL.EnableVertexAttribArray(normalLocation);
 
-            var textureLocation = _shader.GetAttribLocation("aUv");
+            var textureLocation = _shader.GetAttribLocation("aTexCoord");
             GL.VertexAttribPointer(textureLocation, 2, VertexAttribPointerType.Float, false, stride, 6 * sizeof(float));
             GL.EnableVertexAttribArray(textureLocation);
 
