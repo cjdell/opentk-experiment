@@ -65,9 +65,6 @@ namespace opentk_experiment
             double timeValue = _timer.Elapsed.TotalSeconds;
             float greenValue = (float)Math.Sin(timeValue) / 2.0f + 0.5f;
 
-            int vertexColorLocation = GL.GetUniformLocation(_shader.Handle, "ourColor");
-            GL.Uniform4(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-
             _sceneObjects[0].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[1].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[2].Translation.Y = (float)Math.Sin(timeValue);
@@ -77,6 +74,10 @@ namespace opentk_experiment
 
             _shader.SetMatrix4("uView", _camera.GetViewMatrix());
             _shader.SetMatrix4("uProjection", _camera.GetProjectionMatrix());
+
+            _shader.SetVector3("uLightColour", new Vector3(1.0f, 1.0f, 1.0f));
+            _shader.SetVector3("uLightPos", new Vector3(1.2f, 1.0f, 2.0f));
+            _shader.SetVector3("uViewPos", _camera.Position);
 
             // Draw the scene object
             _sceneObjects.ForEach(o => o.Draw(Matrix4.Identity));
