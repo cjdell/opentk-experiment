@@ -14,7 +14,6 @@ namespace opentk_experiment
         private Shader _shader;
         private readonly List<SceneObject> _sceneObjects = [];
         private Camera _camera;
-        private Texture _texture;
 
         protected override void OnLoad()
         {
@@ -26,10 +25,23 @@ namespace opentk_experiment
 
             // Initialize the shader
             _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+            _shader.SetInt("texture0", 0);
             _shader.Use();
 
-            _sceneObjects.Add(new Plane(_shader, 1.0f, 1.0f));
-            _sceneObjects.Add(new Cube(_shader, 0.5f));
+            var plane = new Plane(_shader, 1.0f, 1.0f)
+            {
+                Texture = Texture.LoadFromFile("Resources/texture.png")
+            };
+
+            var cube = new Cube(_shader, 1.0f)
+            {
+                Texture = Texture.LoadFromFile("Resources/cube.png")
+            };
+
+            plane.Translation.Y = 2.0f;
+
+            _sceneObjects.Add(plane);
+            _sceneObjects.Add(cube);
             _sceneObjects.Add(new Sphere(_shader, 0.5f, 24, 24));
 
             var group = new SceneGroup(_shader);
@@ -50,10 +62,6 @@ namespace opentk_experiment
             // Start the timer
             _timer = new Stopwatch();
             _timer.Start();
-
-            _texture = Texture.LoadFromFile("Resources/cube.png");
-            _texture.Use(TextureUnit.Texture0);
-            _shader.SetInt("texture0", 0);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -68,7 +76,7 @@ namespace opentk_experiment
             _sceneObjects[0].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[1].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[1].Rotation.X = (float)MathHelper.DegreesToRadians(timeValue * 30.0f);
-            _sceneObjects[2].Translation.Y = (float)Math.Sin(timeValue);
+            _sceneObjects[2].Translation.Y = (float)Math.Sin(timeValue) * 2.0f;
 
             _sceneObjects[3].Rotation.Y = (float)MathHelper.DegreesToRadians(timeValue * 90.0f);
             _sceneObjects[3].Translation.Y = (float)Math.Sin(timeValue / 4.0f);

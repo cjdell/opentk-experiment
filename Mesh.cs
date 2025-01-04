@@ -6,6 +6,15 @@ namespace opentk_experiment
 {
     public abstract class Mesh(Shader shader) : SceneObject(shader)
     {
+        static Texture WhiteTexture;
+
+        static Mesh()
+        {
+            WhiteTexture = Texture.LoadFromFile("Resources/white.png");
+        }
+
+        public Texture? Texture { get; set; }
+
         private int _vertexArrayObject;
         private int _vertexBufferObject;
         private int _elementBufferObject;
@@ -60,6 +69,8 @@ namespace opentk_experiment
         {
             // Each object sets its own model matrix
             _shader.SetMatrix4("uModel", modelMatrix);
+
+            (Texture ?? WhiteTexture).Use(TextureUnit.Texture0);
 
             // Bind the VAO and draw the elements
             GL.BindVertexArray(_vertexArrayObject);
